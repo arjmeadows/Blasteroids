@@ -1,0 +1,27 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
+
+dependencies {
+  api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+  api "com.badlogicgames.box2dlights:box2dlights:$box2dlightsVersion"
+  api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+  api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+  api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  api "com.github.tommyettinger:libgdx-utils-box2d:$utilsBox2dVersion"
+  api "com.github.tommyettinger:libgdx-utils:$utilsVersion"
+  api "io.github.libktx:ktx-ai:$ktxVersion"
+  api "io.github.libktx:ktx-ashley:$ktxVersion"
+  api "io.github.libktx:ktx-box2d:$ktxVersion"
+  api "io.github.libktx:ktx-freetype:$ktxVersion"
+
+  if(enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
+    implementation "com.badlogic.gdx:gdx:1.10.0"  // or a newer version of LibGDX
+
+    // Additional backend dependencies (if using specific platforms like desktop)
+    implementation "com.badlogic.gdx:gdx-backend-lwjgl3:1.10.0"  // if using the LWJGL3 backend
+  }
+  }
