@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -28,6 +29,9 @@ public class Main implements ApplicationListener {
 
     SpriteBatch spriteBatch;
     FitViewport viewport;
+    Asteroid asteroidAll = new Asteroid();
+    Asteroid asteroidAll2 = new Asteroid();
+
 
 
     @Override
@@ -52,7 +56,6 @@ public class Main implements ApplicationListener {
     spriteBatch  = new SpriteBatch();
     viewport = new FitViewport(8, 5);
 
-
     }
 
     @Override
@@ -66,8 +69,10 @@ public class Main implements ApplicationListener {
         draw();
         input();
         logic();
-        asteroidmove();
 
+        // draw asteroids
+        asteroidAll.asteroidMove(0.25f, asteroidSprite);
+        asteroidAll2.asteroidMove(0.1f, asteroidSprite);
 
     }
 
@@ -134,13 +139,6 @@ public class Main implements ApplicationListener {
 
         }
 
-    private void asteroidmove() {
-        float speed = 0.25f;
-        float delta = Gdx.graphics.getDeltaTime();
-
-        asteroidSprite.translateX(speed * delta);
-
-    }
 
     }
 
