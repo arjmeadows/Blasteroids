@@ -32,7 +32,6 @@ public class Main implements ApplicationListener {
     SpriteBatch spriteBatch;
     FitViewport viewport;
     Asteroid asteroidAll = new Asteroid();
-    Asteroid asteroidAll2 = new Asteroid();
     Ship ship1 = new Ship();
 
 
@@ -54,6 +53,7 @@ public class Main implements ApplicationListener {
 
     asteroid = new Texture("ast.png");
     asteroidSprite = new Sprite(asteroid);
+    asteroidSprite.setOrigin(7, 5);
     asteroidSprite.setSize(1,1);
 
     bgSound = Gdx.audio.newMusic(Gdx.files.internal("core_bg.mp3"));
@@ -110,6 +110,9 @@ public class Main implements ApplicationListener {
         shipSprite.draw(spriteBatch);
         asteroidSprite.draw(spriteBatch);
 
+
+        public boolean shotFired() {
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.M)) {
             ship1.shipShoot(1, 2, shipSprite, spriteBatch, bullet);
