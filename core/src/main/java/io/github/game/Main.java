@@ -32,6 +32,10 @@ public class Main implements ApplicationListener {
     Asteroid asteroidAll = new Asteroid();
     Asteroid asteroidAll2 = new Asteroid();
 
+    // set speed and delta variables
+    float speed = 4f;
+    float delta;
+
 
 
     @Override
@@ -110,8 +114,8 @@ public class Main implements ApplicationListener {
 
 
     private void input() {
-        float speed = 4f;
-        float delta = Gdx.graphics.getDeltaTime();
+
+        delta = Gdx.graphics.getDeltaTime();
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             shipSprite.translateX(speed * delta);
@@ -128,8 +132,6 @@ public class Main implements ApplicationListener {
     }
 
     private void logic() {
-        float delta = Gdx.graphics.getDeltaTime();
-
         float worldWidth = viewport.getWorldWidth();
             float worldHeight = viewport.getWorldHeight();
 
