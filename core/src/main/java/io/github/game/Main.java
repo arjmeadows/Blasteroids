@@ -4,7 +4,10 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -19,6 +22,9 @@ public class Main implements ApplicationListener {
     Texture ship;
     Music bgSound;
     Sprite shipSprite;
+    Sprite asteroidSprite;
+    BitmapFont font;
+    Texture asteroid;
 
     SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -27,17 +33,24 @@ public class Main implements ApplicationListener {
     @Override
     public void create() {
     backgroundTexture = new Texture("space_bg.png");
+    font = new BitmapFont();
+
 
     ship = new Texture("ship1.png");
     shipSprite = new Sprite(ship);
     shipSprite.setSize(1,1);
 
+    asteroid = new Texture("ast.png");
+    asteroidSprite = new Sprite(asteroid);
+    asteroidSprite.setSize(1,1);
 
     bgSound = Gdx.audio.newMusic(Gdx.files.internal("core_bg.mp3"));
+    bgSound.setLooping(true);
+    bgSound.setVolume(.5f);
+    bgSound.play();
 
     spriteBatch  = new SpriteBatch();
     viewport = new FitViewport(8, 5);
-
 
 
     }
@@ -51,6 +64,10 @@ public class Main implements ApplicationListener {
     public void render() {
 
         draw();
+        input();
+        logic();
+        asteroidmove();
+
 
     }
 
@@ -73,16 +90,17 @@ public class Main implements ApplicationListener {
         ScreenUtils.clear(Color.BLACK);
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+
         spriteBatch.begin();
 
 
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
-
         spriteBatch.draw(backgroundTexture, 0, 0, 8, 5);
         shipSprite.draw(spriteBatch);
+        asteroidSprite.draw(spriteBatch);
+      //  font.draw(spriteBatch, "Health", 2, 2);
 
         spriteBatch.end();
+
     }
 
 
@@ -93,11 +111,36 @@ public class Main implements ApplicationListener {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             shipSprite.translateX(speed * delta);
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                shipSprite.translateX(speed * delta);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            shipSprite.translateX(-speed * delta);
+
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            shipSprite.translateY(speed * delta);
+
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            shipSprite.translateY(-speed * delta);
         }
     }
 
+    private void logic() {
+        float delta = Gdx.graphics.getDeltaTime();
 
+        float worldWidth = viewport.getWorldWidth();
+            float worldHeight = viewport.getWorldHeight();
 
-}
+            shipSprite.setX(MathUtils.clamp(shipSprite.getX(), 0, worldWidth));
+        shipSprite.setY(MathUtils.clamp(shipSprite.getY(), 0, worldHeight));
+        shipSprite.setY(MathUtils.clamp(shipSprite.getY(), 0, worldHeight));
+
+        }
+
+    private void asteroidmove() {
+        float speed = 0.25f;
+        float delta = Gdx.graphics.getDeltaTime();
+
+        asteroidSprite.translateX(speed * delta);
+
+    }
+
+    }
+
