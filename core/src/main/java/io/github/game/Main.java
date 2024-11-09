@@ -14,6 +14,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import org.w3c.dom.Text;
 
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -26,11 +27,14 @@ public class Main implements ApplicationListener {
     Sprite asteroidSprite;
     BitmapFont font;
     Texture asteroid;
+    static Texture bullet;
 
     SpriteBatch spriteBatch;
     FitViewport viewport;
     Asteroid asteroidAll = new Asteroid();
     Asteroid asteroidAll2 = new Asteroid();
+    Ship ship1 = new Ship();
+
 
     // set speed and delta variables
     float speed = 4f;
@@ -74,10 +78,9 @@ public class Main implements ApplicationListener {
         input();
         logic();
 
+
         // draw asteroids
         asteroidAll.asteroidMove(0.25f, asteroidSprite);
-        asteroidAll2.asteroidMove(0.1f, asteroidSprite);
-
     }
 
     @Override
@@ -106,7 +109,11 @@ public class Main implements ApplicationListener {
         spriteBatch.draw(backgroundTexture, 0, 0, 8, 5);
         shipSprite.draw(spriteBatch);
         asteroidSprite.draw(spriteBatch);
-      //  font.draw(spriteBatch, "Health", 2, 2);
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
+            ship1.shipShoot(1, 2, shipSprite, spriteBatch, bullet);
+        }
 
         spriteBatch.end();
 

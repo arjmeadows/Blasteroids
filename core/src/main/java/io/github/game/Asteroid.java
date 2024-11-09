@@ -9,7 +9,7 @@ public class Asteroid {
 
     public void asteroidMove(float speed, Sprite asteroidSprite) {
         float delta = Gdx.graphics.getDeltaTime();
-
+        asteroidSprite.setOrigin(1,5);
         asteroidSprite.translateX(speed * delta);
 
     }
